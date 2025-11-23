@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Enjoy Coffee - Menu In Ấn</title>
+<style>
+/* Reset CSS cho in ấn */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Kích thước A4 */
+@page {
+  size: A4;
+  margin: 15mm;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  line-height: 1.4;
+  background: white;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 0;
+  font-size: 12pt;
+  background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Container chính với độ trong suốt 30% (hình nền rõ 70%) */
+.container {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 15mm;
+  min-height: 297mm;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Ẩn các phần không cần in */
+.no-print {
+  display: none;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  background: linear-gradient(135deg, rgba(27, 94, 32, 0.95) 0%, rgba(46, 125, 50, 0.95) 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin: -15mm -15mm 25px -15mm;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.1;
+  z-index: 0;
+}
+.header-title {
+  font-size: 32pt;
+  margin-bottom: 5px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 1;
+}
+.header-subtitle {
+  font-size: 16pt;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+/* Menu sections */
+.menu-section {
+  margin-bottom: 25px;
+  page-break-inside: avoid;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-left: 4px solid #2E7D32;
+}
+.menu-section h2 {
+  color: #1B5E20;
+  border-bottom: 2px solid #4CAF50;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+  font-size: 18pt;
+  background: linear-gradient(to right, rgba(232, 245, 233, 0.8), transparent);
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+/* Best seller */
+.best-seller-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.best-seller-item {
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(232, 245, 233, 0.9) 0%, rgba(200, 230, 201, 0.9) 100%);
+  border-radius: 6px;
+  border-left: 4px solid #4CAF50;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+.best-seller-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+}
+.best-seller-badge {
+  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+  color: white;
+  font-size: 10pt;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Menu items */
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px dotted #81C784;
+}
+.menu-item-name {
+  font-weight: 600;
+  flex: 1;
+}
+.menu-item-price {
+  font-weight: bold;
+  color: #1B5E20;
+  text-align: right;
+  min-width: 80px;
+}
+.size-info {
+  font-size: 10pt;
+  color: #666;
+  margin-top: 3px;
+  font-style: italic;
+}
+
+/* Coffee and tea sections */
+.coffee-tea-section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Main content wrapper */
+.main-content {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: auto;
+  padding: 15px 0;
+  border-top: 2px solid #4CAF50;
+  color: #1B5E20;
+  font-size: 11pt;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 8px;
+  padding: 15px;
+}
+
+/* QR Code section - Đặt ở góc dưới bên phải */
+.qr-section {
+  position: absolute;
+  bottom: 20mm;
+  right: 20mm;
+  text-align: center;
+}
+.qr-code {
+  width: 100px;
+  height: 100px;
+  border: 2px solid #2E7D32;
+  border-radius: 8px;
+  background-color: white;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+.qr-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+/* CSS cho in ấn */
+@media print {
+  body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 0;
+    background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    background-image: none;
+  }
+  .container {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0;
+    padding: 15mm;
+    box-shadow: none;
+    background: white;
+    page-break-after: always;
+  }
+  .menu-section {
+    page-break-inside: avoid;
+    background: white;
+    box-shadow: none;
+  }
+  .best-seller-item {
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .best-seller-badge {
+    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .header {
+    background: linear-gradient(to right, #1B5E20, #2E7D32) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .footer {
+    position: static;
+    background: white;
+  }
+}
+
+/* Nút in - chỉ hiển thị trên màn hình */
+@media screen {
+  .print-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: all 0.3s;
+  }
+  .print-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+  }
+}
+
+/* Hiệu ứng cho menu items */
+.menu-item:hover {
+  background-color: rgba(232, 245, 233, 0.5);
+  border-radius: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  transition: all 0.2s;
+}
+
+/* Decorations */
+.coffee-icon {
+  color: #1B5E20;
+  margin-right: 8px;
+}
+
+.tea-icon {
+  color: #2E7D32;
+  margin-right: 8px;
+}
+
+/* Coffee bean decorations */
+.coffee-bean {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  opacity: 0.1;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231B5E20"><path d="M11 19a6 6 0 01-6-6c0-2.92 1.5-5.5 4-7 2.5-1.5 5.5-1.5 8 0 2.5 1.5 4 4.08 4 7a6 6 0 01-6 6h-4z"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.bean-1 {
+  top: 40mm;
+  left: 20mm;
+  transform: rotate(25deg);
+}
+
+.bean-2 {
+  bottom: 60mm;
+  right: 25mm;
+  transform: rotate(-15deg);
+}
+
+.bean-3 {
+  top: 80mm;
+  right: 40mm;
+  transform: rotate(45deg);
+}
+
+/* Leaf decorations */
+.leaf-decoration {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  opacity: 0.08;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231B5E20"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c-.01.02 8.9-7.9 9.34-8.7C17.48 9.79 17 8 17 8zm-2.01 5.72c-.41.65-.89 1.43-1.43 2.31l-3.55-3.55c.87-.54 1.64-1.02 2.29-1.43.8-.44 8.68-9.34 8.7-9.34l2.3.95-.66 1.89c-5.17 2.08-11.33 4.17-11.35 4.17z"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.leaf-1 {
+  top: 60mm;
+  left: 40mm;
+  transform: rotate(15deg);
+}
+
+.leaf-2 {
+  bottom: 80mm;
+  right: 60mm;
+  transform: rotate(-25deg);
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <button class="print-btn no-print" onclick="window.print()">🖨️ In Menu</button>
+
+  <!-- Coffee bean decorations -->
+  <div class="coffee-bean bean-1"></div>
+  <div class="coffee-bean bean-2"></div>
+  <div class="coffee-bean bean-3"></div>
+  
+  <!-- Leaf decorations -->
+  <div class="leaf-decoration leaf-1"></div>
+  <div class="leaf-decoration leaf-2"></div>
+
+  <div class="header">
+    <h1 class="header-title">ENJOY COFFEE</h1>
+    <p class="header-subtitle">Hương vị cà phê tuyệt hảo</p>
+  </div>
+
+  <div class="main-content">
+    <!-- BEST SELLER SECTION -->
+    <div class="menu-section">
+      <h2>🔥 BEST SELLER</h2>
+      
+      <div class="best-seller-grid">
+        <div class="best-seller-item">
+          <span class="best-seller-badge">BÁN CHẠY</span>
+          <div class="menu-item-name">Sữa tươi cà phê Ly lớn</div>
+          <div class="menu-item-price">22.000đ</div>
+        </div>
+        
+        <div class="best-seller-item">
+          <span class="best-seller-badge">ĐẶC BIỆT</span>
+          <div class="menu-item-name">Cà phê muối</div>
+          <div class="menu-item-price">17.000đ - 25.000đ</div>
+          <div class="size-info">Size: M - L</div>
+        </div>
+        
+        <div class="best-seller-item">
+          <span class="best-seller-badge">YÊU THÍCH</span>
+          <div class="menu-item-name">Matcha Latte</div>
+          <div class="menu-item-price">25.000đ</div>
+        </div>
+        
+        <div class="best-seller-item">
+          <span class="best-seller-badge">CỔ ĐIỂN</span>
+          <div class="menu-item-name">Trà sữa truyền thống</div>
+          <div class="menu-item-price">20.000đ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CÀ PHÊ & TRÀ GIẢI KHÁT SECTION -->
+    <div class="coffee-tea-section">
+      <!-- CÀ PHÊ SECTION -->
+      <div class="menu-section">
+        <h2><span class="coffee-icon">☕</span> CÀ PHÊ</h2>
+        <div class="menu-item">
+          <div class="menu-item-name">Cà phê đá</div>
+          <div class="menu-item-price">14.000đ - 18.000đ</div>
+        </div>
+        <div class="size-info">Size: M - L</div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Cà phê sữa</div>
+          <div class="menu-item-price">16.000đ - 20.000đ</div>
+        </div>
+        <div class="size-info">Size: M - L</div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Cà phê muối</div>
+          <div class="menu-item-price">17.000đ - 25.000đ</div>
+        </div>
+        <div class="size-info">Size: M - L</div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Bạc xỉu</div>
+          <div class="menu-item-price">18.000đ - 22.000đ</div>
+        </div>
+        <div class="size-info">Size: M - L</div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Bạc xỉu muối</div>
+          <div class="menu-item-price">22.000đ - 25.000đ</div>
+        </div>
+        <div class="size-info">Size: M - L</div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Cacao sữa</div>
+          <div class="menu-item-price">17.000đ - 25.000đ</div>
+        </div>
+        <div class="size-info">Size: M - L</div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Cacao muối</div>
+          <div class="menu-item-price">20.000đ - 25.000đ</div>
+        </div>
+        <div class="size-info">Size: M - L</div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Milo dầm trân châu trắng</div>
+          <div class="menu-item-price">17.000đ</div>
+        </div>
+      </div>
+
+      <!-- TRÀ GIẢI KHÁT SECTION -->
+      <div class="menu-section">
+        <h2><span class="tea-icon">🍵</span> TRÀ GIẢI KHÁT</h2>
+        <div class="menu-item">
+          <div class="menu-item-name">Trà đào</div>
+          <div class="menu-item-price">20.000đ</div>
+        </div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Trà dâu</div>
+          <div class="menu-item-price">20.000đ</div>
+        </div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Trà vải</div>
+          <div class="menu-item-price">20.000đ</div>
+        </div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Trà ổi</div>
+          <div class="menu-item-price">20.000đ</div>
+        </div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Chanh đá</div>
+          <div class="menu-item-price">15.000đ</div>
+        </div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Lipton chanh</div>
+          <div class="menu-item-price">15.000đ</div>
+        </div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Lipton chanh mật ong</div>
+          <div class="menu-item-price">20.000đ</div>
+        </div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Trà tắc</div>
+          <div class="menu-item-price">12.000đ</div>
+        </div>
+        
+        <div class="menu-item">
+          <div class="menu-item-name">Trà tắc xí muội</div>
+          <div class="menu-item-price">17.000đ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- QR Code Section - Đặt ở góc dưới bên phải -->
+  <div class="qr-section">
+    <div class="qr-code">
+      <!-- Thay thế bằng hình QR Code thực tế của bạn -->
+      <img src="1000019689.jpg" alt="QR Code Thanh Toán" class="qr-image">
+    </div>
+  </div>
+  
+  <div class="footer">
+    <p><strong>Hotline:</strong> 070.3388.980 | <strong>Địa chỉ:</strong> 930 Tỉnh lộ 10, P. Tân Tạo, Q. Bình Tân</p>
+    <p><strong>Giờ mở cửa:</strong> 5h10 - 22h00 hàng ngày</p>
+  </div>
+</div>
+
+<script>
+// Tự động kích hoạt hộp thoại in khi trang tải xong
+window.addEventListener('DOMContentLoaded', (event) => {
+  // Nếu URL có tham số ?print, tự động mở hộp thoại in
+  if (window.location.search.includes('print=true')) {
+    setTimeout(() => {
+      window.print();
+    }, 500);
+  }
+});
+
+// Đảm bảo menu không bị cắt khi in
+window.onbeforeprint = function() {
+  const sections = document.querySelectorAll('.menu-section');
+  sections.forEach(section => {
+    section.style.pageBreakInside = 'avoid';
+  });
+};
+</script>
+</body>
+</html>
